@@ -14,7 +14,7 @@ return [
     */
 
     'paths' => [
-        realpath('../../index.html'),
+        realpath('../../index.php'),
     ],
 
     /*
