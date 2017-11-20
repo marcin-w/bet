@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('authApp')
+        .module('betApp')
         .run(setupFakeBackend);
 
     // setup fake backend for backend-less development

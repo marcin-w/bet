@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('authApp')
+        .module('betApp')
         .controller('Login.IndexController', Controller);
 
     function Controller($location, AuthenticationService) {

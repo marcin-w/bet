@@ -1,5 +1,5 @@
-var betApp = angular.module('betApp', ['toaster', 'betService']);
-var chartApp = angular.module('chartApp', ['chart.js', 'chartService']);
+var betApp = angular.module('betApp', ['ui.router', 'ngMessages', 'ngStorage', 'ngMockE2E', 'toaster', 'betService', 'chart.js', 'chartService']);
+//var chartApp = angular.module('chartApp', ['chart.js', 'chartService', 'betApp']);
 
 (function() {
 
@@ -8,29 +8,9 @@ var chartApp = angular.module('chartApp', ['chart.js', 'chartService']);
     angular
         //.module('authApp', ['ui.router', 'satellizer'])
         //.config(function($stateProvider, $urlRouterProvider, $authProvider) {
-        .module('authApp', ['ui.router', 'ngMessages', 'ngStorage', 'ngMockE2E', 'betApp'])
+        .module('betApp')
         .config(config)
         .run(run);
-
-            // Satellizer configuration that specifies which API
-            // route the JWT should be retrieved from
-            //$authProvider.loginUrl = '/api/authenticate';
-
-            //// Redirect to the auth state if any other states
-            //// are requested other than users
-            //$urlRouterProvider.otherwise('/auth');
-
-            //$stateProvider
-            //    //.state('auth', {
-            //    //    url: '/auth',
-            //    //    templateUrl: '../laravel/views/authView.html',
-            //    //    controller: 'AuthController as auth'
-            //    //})
-            //    .state('bets', {
-            //        url: '/bet',
-            //        templateUrl: '../../index.php',
-            //        controller: 'BetController as bet'
-            //    });
 
     function config($stateProvider, $urlRouterProvider) {
         // default route
@@ -38,16 +18,22 @@ var chartApp = angular.module('chartApp', ['chart.js', 'chartService']);
 
         // app routes
         $stateProvider
-            .state('home', {
-                url: '/',
-                templateUrl: 'home.html',
-                controller: 'BetCtrl',
-                controllerAs: 'vm'
-            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'login.html',
                 controller: 'Login.IndexController',
+                controllerAs: 'vm'
+            })
+            .state('chart', {
+                url: '/chart',
+                templateUrl: 'chart.html',
+                controller: 'ChartCtrl',
+                controllerAs: 'vm'
+            })
+            .state('home', {
+                url: '/',
+                templateUrl: 'home.html',
+                controller: 'BetCtrl',
                 controllerAs: 'vm'
             });
     }
