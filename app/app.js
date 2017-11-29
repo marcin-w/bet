@@ -1,4 +1,4 @@
-var betApp = angular.module('betApp', ['ui.router', 'ngMessages', 'ngStorage', 'ngMockE2E', 'toaster', 'betService', 'chart.js', 'chartService']);
+var betApp = angular.module('betApp', ['ui.router', 'ngMessages', 'ngStorage', 'toaster', 'betService', 'chart.js', 'chartService']);
 //var chartApp = angular.module('chartApp', ['chart.js', 'chartService', 'betApp']);
 
 (function() {
