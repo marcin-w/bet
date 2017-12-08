@@ -1,4 +1,8 @@
-<div ng-controller="ChartCtrl">
+<div class="col-md-6 col-md-offset-3" ng-controller="ChartCtrl">
+    <div class="page-header">
+        <p><a href="#/login">Wyloguj</a></p>
+        <p><a href="#/">Zakłady</a></p>
+    </div>
     <canvas id="line" class="chart chart-line" chart-data="data"
         chart-labels="labels" chart-series="series" chart-options="options"
         chart-dataset-override="datasetOverride" chart-click="onClick">

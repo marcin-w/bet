@@ -47,16 +47,6 @@ class BetController extends Controller
 //        return view('BetApp/index');
     }
 
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return Response
-//     */
-//    public function create()
-//    {
-//        //
-//    }
-
     /**
      * Store a newly created resource in storage.
      *

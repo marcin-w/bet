@@ -1,13 +1,10 @@
 var betApp = angular.module('betApp', ['ui.router', 'ngMessages', 'ngStorage', 'toaster', 'betService', 'chart.js', 'chartService']);
-//var chartApp = angular.module('chartApp', ['chart.js', 'chartService', 'betApp']);
 
 (function() {
 
     'use strict';
 
     angular
-        //.module('authApp', ['ui.router', 'satellizer'])
-        //.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         .module('betApp')
         .config(config)
         .run(run);

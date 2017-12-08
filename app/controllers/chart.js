@@ -6,8 +6,6 @@ betApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 
             $scope.labels = Object.keys(data);
             $scope.data = [Object.values(data)];
-            console.log($scope.labels);
-            console.log($scope.data);
         })
         .error(function (data) {
             console.log(data);

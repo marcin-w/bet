@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use JWTAuth;
 use Illuminate\Http\Request;
 
 class Bet extends Model
 {
-
     public static function get()
     {
         $bets = DB::table('bet')
@@ -30,7 +30,7 @@ class Bet extends Model
             ->join('team as team1', 'match.team1_id', '=', 'team1.team_id')
             ->join('team as team2', 'match.team2_id', '=', 'team2.team_id')
             ->leftJoin('bet', function ($join) {
-                $join->on('match.match_id', '=', 'bet.match_id')->where('bet.user_id', '=', 1)->where('bet.item_status', '=', 1);   //todo
+                $join->on('match.match_id', '=', 'bet.match_id')->where('bet.user_id', '=', 1)->where('bet.item_status', '=', 1);
             })
             ->select(
                 'match.match_id as id',
@@ -76,19 +76,19 @@ class Bet extends Model
         $bet = DB::table('bet')
             ->select()
             ->where('match_id', '=', $matchId)
-            ->where('user_id', '=', 1)//todo
+            ->where('user_id', '=', 1) // JWTAuth::toUser(JWTAuth::getToken())->id
             ->get();
 
         if (count($bet) == 1) {
             if ($teamId > 0) {
                 DB::table('bet')
                     ->where('match_id', '=', $matchId)
-                    ->where('user_id', '=', 1)//todo
+                    ->where('user_id', '=', 1) // JWTAuth::toUser(JWTAuth::getToken())->id
                     ->update(['team_id' => $teamId, 'item_status' => 1]);
             } else {
                 DB::table('bet')
                     ->where('match_id', '=', $matchId)
-                    ->where('user_id', '=', 1)//todo
+                    ->where('user_id', '=', 1) // JWTAuth::toUser(JWTAuth::getToken())->id
                     ->update(['item_status' => 0]);
             }
         } elseif (count($bet) == 0 && $teamId > 0) {
@@ -96,7 +96,7 @@ class Bet extends Model
                 [
                     'match_id' => $matchId,
                     'team_id' => $teamId,
-                    'user_id' => 1, //todo
+                    'user_id' => 1, // JWTAuth::toUser(JWTAuth::getToken())->id
                     'item_status' => 1
                 ]
             ]);
@@ -112,8 +112,6 @@ class Bet extends Model
 
         return $match[0]->date > date('Y-m-d H:i:s');
     }
-
-//todo
 
     public function getMyResults()
     {
@@ -135,7 +133,7 @@ class Bet extends Model
                 DB::raw('(CASE WHEN team_id = match.winner_id THEN 1 ELSE 0 END) AS won')
             )
             ->where('bet.item_status', '=', 1)
-            ->where('bet.user_id', '=', 1) //todo
+            ->where('bet.user_id', '=', 1) // JWTAuth::toUser(JWTAuth::getToken())->id
             ->whereNotNull('match.winner_id')
             ->groupBy('bet.user_id', 'bet.match_id')
             ->get();

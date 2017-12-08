@@ -29,7 +29,7 @@ class Chart extends Model
                 DB::raw('(CASE WHEN team_id = m.winner_id THEN 1 ELSE 0 END) AS won')
             )
             ->where('bet.item_status', '=', 1)
-            ->where('bet.user_id', '=', 1) //todo
+            ->where('bet.user_id', '=',  1) // JWTAuth::toUser(JWTAuth::getToken())->id
             ->where('match.winner_id IS NOT NULL')
             ->groupBy('bet.user_id', 'bet.match_id')
             ->get();
