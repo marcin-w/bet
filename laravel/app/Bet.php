@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use JWTAuth;
 use Illuminate\Http\Request;
+use App\WinsCalculator;
 
 class Bet extends Model
 {
-    public static function get()
+    public function get()
     {
         $bets = DB::table('bet')
             ->select(
@@ -55,20 +56,8 @@ class Bet extends Model
             $wins[$bet->match_id][$bet->team_id] = $bet->count;
         }
 
-//        var_dump($wins);
-        foreach ($matches as $match) {
-            if ($match->winner_id !== null && !empty($wins[$match->id]) && $match->bet > 0) {
-                $betsQuantity = array_sum($wins[$match->id]);
-                if ($match->betTeamId == $match->winner_id) {
-                    $match->won = $betsQuantity / $wins[$match->id][$match->winner_id] * 5 - 5;
-                } else {
-//                    $match->won = -$betsQuantity / ($betsQuantity - $wins[$match->id][$match->winner_id]) * 5;
-                    $match->won = -5;
-                }
-            }
-        }
-
-        return $matches;
+        $winsCalculator = new WinsCalculator();
+        return $winsCalculator->countWins($matches, $wins);
     }
 
     public function saveBet($matchId, $teamId)

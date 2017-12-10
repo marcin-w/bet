@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('path.public', function() {
-            die('aad');
             return base_path().'/view';
         });
     }

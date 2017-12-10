@@ -14,6 +14,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use JWTAuth;
+use App\ChartDataCalculator;
 
 class BetController extends Controller
 {
@@ -75,21 +76,8 @@ class BetController extends Controller
         $betsInMatchCount = $this->transform($this->bet->getBetsInMatchCount());
         $betsInMatchWon = $this->transform($this->bet->getBetsInMatchWon());
 
-        $resultArr = [0];
-        $currentValue = 0;
-        foreach ($matchIds as $matchId => $match) {
-            if (isset($myResults[$matchId])) {
-                if (1 == $myResults[$matchId]->won) {
-                    $won = round($betsInMatchCount[$matchId]->betCount / $betsInMatchWon[$matchId]->betWon, 2) * 5 - 5;
-                } else {
-                    $won = -5;
-                }
-
-                $currentValue += $won;
-            }
-
-            $resultArr[$matchId] = $currentValue;
-        }
+        $chartDataCalculator = new ChartDataCalculator();
+        $resultArr = $chartDataCalculator->getData($matchIds, $myResults, $betsInMatchCount, $betsInMatchWon);
 
         return new Response($resultArr);
     }
